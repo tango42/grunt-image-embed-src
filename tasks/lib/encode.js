@@ -16,8 +16,11 @@ var grunt_fetch = require("./fetch");
 
 // Cache regex's
 var rImages = /([\s\S]*?)(url\(([^)]+)\))(?!\s*[;,]?\s*\/\*\s*ImageEmbed:skip\s*\*\/)|([\s\S]+)/img;
-var rExternal = /^(http|https|\/\/)/;
-var rSchemeless = /^\/\//;
+
+// regex for matching 'src="back.png"' :
+var rImagesSrc = /([\s\S]*?)(src\s*=\s*"([^"]+)")|([\s\S]+)/img;
+
+var rExternal = /^http/;
 var rData = /^data:/;
 var rQuotes = /['"]/g;
 var rParams = /([?#].*)$/g;
@@ -58,15 +61,21 @@ exports.init = function(grunt) {
     }
 
     var deleteAfterEncoding = opts.deleteAfterEncoding;
+    var typeSrc = opts.typeSrc;
     var src = file.read(srcFile);
     var result = "";
     var match, img, line, tasks, group;
 
     async.whilst(function() {
-      group = rImages.exec(src);
+      if (typeSrc) {
+        group = rImagesSrc.exec(src);
+      } else {
+        group = rImages.exec(src);
+      }
       return group != null;
     },
     function(complete) {
+      // console.log(group[2]);
       // if there is another url to be processed, then:
       //    group[1] will hold everything up to the url declaration
       //    group[2] will hold the complete url declaration (useful if no encoding will take place)
@@ -106,14 +115,16 @@ exports.init = function(grunt) {
             }
           }
 
-          // Test for scheme less URLs => "//example.com/image.png"
-          if (!is_local_file && rSchemeless.test(loc)) {
-            loc = 'http:' + loc;
-          }
-
           exports.image(loc, opts, function(err, resp, cacheable) {
             if (err == null) {
-              var url = "url(" + resp + ")";
+              var url;
+              if (typeSrc) {
+                // result of type 'src="back.png"' :
+                url = "src=\"" + resp + "\"";
+              } else {
+                url = "url(" + resp + ")";
+              }
+
               result += url;
 
               if(cacheable !== false) {
