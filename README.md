@@ -66,6 +66,7 @@ Specify that an image should be skipped by adding the following comment directiv
 ```css
 background: url(image.gif); /*ImageEmbed:skip*/
 ```
+Not supported when using typeSrc!
 
 ## Compatibility
 
