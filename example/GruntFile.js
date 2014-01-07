@@ -6,6 +6,7 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     imageEmbed: {
+
       dist: {
         src: "css/styles.css",
         dest: "css/output.css",
@@ -16,8 +17,17 @@ module.exports = function(grunt) {
 
           // Base directory if you use absolute paths in your stylesheet
           // baseDir: "/Users/ehynds/projects/grunt-image-embed/"
-        }
+          }
+      },
 
+      dist2: {
+        src: [ 'skin/skin.xml' ],
+        dest: 'skin/skin_output.xml',
+        options: {
+          deleteAfterEncoding : false,
+          //typeSrc: search/replace 'src=' declarations instead of default ''url()''
+          typeSrc: true
+        }
       }
     }
   });

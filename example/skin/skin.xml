@@ -1,0 +1,23 @@
+<skin version="2.0" name="Six" author="LongTail Video" target="6.0">
+
+	<components>
+		<component name="controlbar">
+			<settings>
+				<setting name="margin" value="8" />
+				<setting name="fontcolor" value="eeeeee" />
+				<setting name="fontsize" value="11" />
+				<setting name="fontweight" value="bold" />
+				<setting name="maxwidth" value="800" />
+			</settings>
+
+			<elements>
+				<element name="background" src="display/back.png" />
+				<element name="capLeft" src="display/left.png" />
+				<element name="capRight" src="display/right.png" />
+				<element name="divider" src="controlbar/divider.png" />
+			</elements>
+		</component>
+
+	</components>
+
+</skin>

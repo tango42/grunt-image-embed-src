@@ -35,6 +35,6 @@
     "grunt-contrib-nodeunit": "0.1.x"
   },
   "keywords" : [
-    "gruntplugin", "base64", "data URI", "css", "image"
+    "gruntplugin", "base64", "data URI", "css", "image", "src"
   ]
 }
